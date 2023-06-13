@@ -1,0 +1,21 @@
+version: '3'
+services:
+  bitwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - SIGNUPS_ALLOWED=false
+      - DOMAIN=https://vaultwarden.bruvland.com
+      - SMTP_HOST=vps2.bruvland.com
+      - SMTP_FROM=no-reply@bruvland.com
+      - SMTP_PORT=587
+      - SMTP_SSL=true
+      - SMTP_USERNAME=no-reply@brvland.com
+      - SMTP_PASSWORD=<Email password>
+      - ADMIN_TOKEN=<admin token>
+    volumes:
+      - ./bw-data:/data
+    ports:
+      - 5001:80
