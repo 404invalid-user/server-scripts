@@ -1,0 +1,25 @@
+{
+  database: {
+    host: postgres
+    password: "<DB PASSWORD>"
+  }
+  hostname: "<DOMAIN>"
+  pictrs: {
+    url: "http://pictrs:8076/"
+    api_key: "<a api key>"
+  }
+  email: {
+    smtp_server: "vps2.bruvland.com:587"
+    smtp_login: "no-reply@example.com"
+    smtp_password: "<email password>!"
+    smtp_from_address: "no-reply@example.com"
+    tls_type: "starttls"
+  }
+  tls_enabled: true
+  setup: {
+    admin_username: "admin"
+    admin_password: "<a password>"
+    site_name: "A Lemmy Site"
+    admin_email: "<your email>"
+  }
+}
