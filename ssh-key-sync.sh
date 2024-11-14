@@ -1,18 +1,24 @@
 #!/bin/bash
 
 # Define variables
-github_user="404invalid-user"
+github_users=("404invalid-user" "404invalid-user")
+
 ssh_file_path="$HOME/.ssh"
 ssh_file_name="authorized_keys"
 
-ssh_keys=$(curl -sSL "https://github.com/$github_user.keys")
 
-if [ -n "$ssh_keys" ]; then
-  if ! cmp -s <(echo "$ssh_keys") "$ssh_file_path/$ssh_file_name"; then
-    echo "$ssh_keys" > "$ssh_file_path/$ssh_file_name"
-    chmod 600 "$ssh_file_path/$ssh_file_name"
-    echo "Keys updated pushed to file."
+# do not edit
+keys=""
+
+for github_user in "${github_users[@]}"; do
+  user_ssh_keys=$(curl -sSL "https://github.com/$github_user.keys")
+
+  if [ -n "$user_ssh_keys" ]; then
+    keys="$keys\n\n# $github_user\n$user_ssh_keys"
+  else
+    echo "Failed to download SSH keys from GitHub for user $github_user."
   fi
-else
-  echo "Failed to download SSH keys from GitHub not updating file."
-fi
+done
+
+[ -f "$ssh_file_path/$ssh_file_name" ] && rm "$ssh_file_path/$ssh_file_name"
+printf "$keys" >"$ssh_file_path/$ssh_file_name"
